@@ -4,35 +4,28 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.Editable;
-import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Filter;
-import android.widget.Filterable;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.badve.ajinkya.heyweather.Adapters.RecyclerViewCityAdapter;
 import com.badve.ajinkya.heyweather.Interfaces.SoftKeyboardStateHelper;
 import com.badve.ajinkya.heyweather.Models.City;
-import com.badve.ajinkya.heyweather.Util.PlaceAPI;
 import com.badve.ajinkya.heyweather.Util.PlaceJSONParser;
 import com.badve.ajinkya.heyweather.view.CustomAutoCompleteTextView;
 import com.badve.ajinkya.heyweather.view.RecycleEmptyErrorView;
@@ -47,7 +40,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -63,7 +55,6 @@ public class SplashScreen extends AppCompatActivity {
 
     private static String TAG = SplashScreen.class.getSimpleName();
 
-    private PlacesAutoCompleteAdapter mAdapter;
     RelativeLayout autocompleteLayout;
 
 
@@ -134,8 +125,14 @@ public class SplashScreen extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.d("Entered text", s.toString());
-                placesTask = new PlacesTask();
-                placesTask.execute(s.toString());
+                //TODO check internet related validation
+
+                if (isOnline()) {
+                    placesTask = new PlacesTask();
+                    placesTask.execute(s.toString());
+                }{
+                    Toast.makeText(getApplicationContext(),"No internet connection please try again later",Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -242,7 +239,8 @@ public class SplashScreen extends AppCompatActivity {
                 Log.d("Url",url);
                 Log.d("returning data",data.toString());
             }catch(Exception e){
-                Log.d("Background Task", e.toString());
+
+                Log.d("Background Task error", e.toString());
             }
             return data;
         }
@@ -362,98 +360,12 @@ public class SplashScreen extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public class PlacesAutoCompleteAdapter extends ArrayAdapter<String> implements Filterable {
 
-        ArrayList<String> resultList;
-
-        Context mContext;
-        int mResource;
-
-
-        PlaceAPI mPlaceAPI = new PlaceAPI();
-
-        public PlacesAutoCompleteAdapter(Context context, int resource) {
-            super(context, resource);
-
-            mContext = context;
-            mResource = resource;
+        public boolean isOnline() {
+            ConnectivityManager cm =
+                    (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo netInfo = cm.getActiveNetworkInfo();
+            return netInfo != null && netInfo.isConnectedOrConnecting();
         }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            View view;
-
-            //if (convertView == null) {
-            LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-            if (position != (resultList.size() - 1))
-                view = inflater.inflate(R.layout.autocomplete_list_item, null);
-            else
-                view = inflater.inflate(R.layout.autocomplete_google_logo, null);
-            //}
-            //else {
-            //    view = convertView;
-            //}
-
-            if (position != (resultList.size() - 1)) {
-                TextView autocompleteTextView = (TextView) view.findViewById(R.id.autocompleteText);
-                autocompleteTextView.setText(resultList.get(position));
-            }
-            else {
-                ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
-                // not sure what to do <img class="emoji" draggable="false" alt="😀" src="http://s.w.org/images/core/emoji/72x72/1f600.png">
-            }
-
-            return view;
-        }
-
-        @Override
-        public int getCount() {
-            // Last item will be the footer
-            return resultList.size();
-        }
-
-        @Override
-        public String getItem(int position) {
-            return resultList.get(position);
-        }
-
-        @Override
-        public Filter getFilter() {
-            Filter filter = new Filter() {
-                @Override
-                protected FilterResults performFiltering(CharSequence constraint) {
-                    FilterResults filterResults = new FilterResults();
-                    if (constraint != null) {
-                        resultList = mPlaceAPI.autocomplete(constraint.toString());
-
-                        // Footer
-                        resultList.add("footer");
-
-                        filterResults.values = resultList;
-                        filterResults.count = resultList.size();
-                    }
-
-                    return filterResults;
-                }
-
-                @Override
-                protected void publishResults(CharSequence constraint, FilterResults results) {
-                    if (results != null && results.count > 0) {
-                        notifyDataSetChanged();
-                    }
-                    else {
-                        notifyDataSetInvalidated();
-                    }
-                }
-            };
-
-            return filter;
-        }
-
-
-    }
-
-
 
 }
