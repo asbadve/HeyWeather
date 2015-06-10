@@ -111,8 +111,15 @@ public class SplashScreen extends AppCompatActivity {
 
                 }else {
 
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(intent);
+
+                    if(mDatabase.isCityPresent())
+                    {
+                        Toast.makeText(getApplicationContext(),"Please add atlest one ciy",Toast.LENGTH_SHORT).show();
+                    }else {
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
+                    }
+
                 }
 
 
@@ -130,7 +137,7 @@ public class SplashScreen extends AppCompatActivity {
                 if (isOnline()) {
                     placesTask = new PlacesTask();
                     placesTask.execute(s.toString());
-                }{
+                }else{
                     Toast.makeText(getApplicationContext(),"No internet connection please try again later",Toast.LENGTH_SHORT).show();
                 }
             }
@@ -361,11 +368,14 @@ public class SplashScreen extends AppCompatActivity {
     }
 
 
-        public boolean isOnline() {
-            ConnectivityManager cm =
-                    (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo netInfo = cm.getActiveNetworkInfo();
-            return netInfo != null && netInfo.isConnectedOrConnecting();
+    protected boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+            return true;
+        } else {
+            return false;
         }
+    }
 
 }

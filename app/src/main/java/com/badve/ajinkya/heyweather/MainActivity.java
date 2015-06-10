@@ -102,6 +102,10 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         }
+        if (id == android.R.id.home) {
+            finish();
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }

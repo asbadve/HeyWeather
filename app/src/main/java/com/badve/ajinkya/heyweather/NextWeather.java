@@ -51,7 +51,8 @@ public class NextWeather extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_next_weather);
         toolbar = (Toolbar)findViewById(R.id.app_bar);
-
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initRecyclerView();
         if (getIntent().hasExtra(TAG_WEATHER_CITY))
         {
@@ -142,6 +143,10 @@ public class NextWeather extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+        if (id == android.R.id.home) {
+            finish();
             return true;
         }
 
