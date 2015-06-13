@@ -18,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.badve.ajinkya.heyweather.Adapters.RecyclerViewWeatherAdapter;
 import com.badve.ajinkya.heyweather.Adapters.RecyclerViewWeatherNextAdapter;
+import com.badve.ajinkya.heyweather.Models.City;
 import com.badve.ajinkya.heyweather.Models.Tempreture;
 import com.badve.ajinkya.heyweather.Models.Weather;
 import com.badve.ajinkya.heyweather.Models.WeatherDes;
@@ -42,6 +43,7 @@ public class NextWeather extends AppCompatActivity {
     private RecyclerViewWeatherNextAdapter mRecyclerViewWeatherNextAdapter;
     private static final String TAG_WEATHER_CITY = "city";
     private String cityName;
+    City city;
     Toolbar toolbar;
     private ProgressDialog pDialog;
 
@@ -56,8 +58,8 @@ public class NextWeather extends AppCompatActivity {
         initRecyclerView();
         if (getIntent().hasExtra(TAG_WEATHER_CITY))
         {
-            cityName = getIntent().getStringExtra(TAG_WEATHER_CITY);
-            toolbar.setTitle(cityName);
+            city = getIntent().getParcelableExtra(TAG_WEATHER_CITY);
+            getSupportActionBar().setTitle(city.getName());
 
         }else {
             finish();//TODO with some toast message

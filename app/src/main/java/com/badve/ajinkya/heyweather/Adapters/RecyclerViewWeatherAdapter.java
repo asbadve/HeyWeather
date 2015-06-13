@@ -158,7 +158,9 @@ public class RecyclerViewWeatherAdapter extends RecyclerView.Adapter<RecyclerVie
 
 
                 Intent intent = new Intent(context, NextWeather.class);
-                intent.putExtra(TAG_WEATHER_CITY, city.getName());
+                intent.putExtra(TAG_WEATHER_CITY, city);
+
+                Log.d("City Name",city.toString());
                 //intent.putParcelableArrayListExtra(TAG_WEATHER_PARCEBLE,weather);
                 activity.startActivity(intent);
 

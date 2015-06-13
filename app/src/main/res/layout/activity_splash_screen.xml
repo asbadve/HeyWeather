@@ -75,7 +75,8 @@
         android:id="@+id/recyclerView"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/my_awesome_toolbar"
-         />
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="1dp" />
 
     <!--app:fabSize="Normal"-->
 
