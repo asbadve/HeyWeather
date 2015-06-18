@@ -9,6 +9,7 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.Editable;
@@ -56,6 +57,7 @@ public class SplashScreen extends AppCompatActivity {
     private static String TAG = SplashScreen.class.getSimpleName();
 
     RelativeLayout autocompleteLayout;
+    TextInputLayout textInputLayoutForCity;
 
 
     PlacesTask placesTask;
@@ -86,6 +88,7 @@ public class SplashScreen extends AppCompatActivity {
         initRecyclerView();
         autocompleteLayout = (RelativeLayout)findViewById(R.id.autocompleteLayout);
         fab = (FloatingActionButton) findViewById(R.id.imageView);
+        textInputLayoutForCity = (TextInputLayout) findViewById(R.id.editText1);
         autoCompleteTextView = (CustomAutoCompleteTextView) findViewById(R.id.editText);
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -104,7 +107,7 @@ public class SplashScreen extends AppCompatActivity {
 
                     }else {
 
-                        setErrorMsg("enter valid ciy",autoCompleteTextView);
+                        setErrorMsg("enter valid ciy",textInputLayoutForCity);
                     }
 
 
@@ -193,15 +196,11 @@ public class SplashScreen extends AppCompatActivity {
         recyclerViewCityAdapter.setCities( mDatabase.readCity());
     }
 
-    public static void setErrorMsg(String msg,CustomAutoCompleteTextView viewId)
+    public static void setErrorMsg(String msg,TextInputLayout viewId)
     {
-        //Osama ibrahim 10/5/2013
-        int ecolor = Color.WHITE; // whatever color you want
-        String estring = msg;
-        ForegroundColorSpan fgcspan = new ForegroundColorSpan(ecolor);
-        SpannableStringBuilder ssbuilder = new SpannableStringBuilder(estring);
-        ssbuilder.setSpan(fgcspan, 0, estring.length(), 0);
-        viewId.setError(ssbuilder);
+
+        viewId.setErrorEnabled(true);
+        viewId.setError(msg);
 
     }
 

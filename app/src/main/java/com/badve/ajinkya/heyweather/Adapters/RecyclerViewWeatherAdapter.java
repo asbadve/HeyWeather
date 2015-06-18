@@ -113,7 +113,7 @@ public class RecyclerViewWeatherAdapter extends RecyclerView.Adapter<RecyclerVie
 
 
 
-                weather = parseJsonResponse(response);
+                weather = parseJsonResponse(city,response);
                 Log.d("14 object of weather",""+weather.toString());
                 holder.mainTemp.setText(""+getInKelvin(weather.get(0).getmArrayListTemp().get(0).getDayTmpreture())+""+ (char) 0x00B0);
                 Date date = weather.get(0).getDate();
@@ -194,7 +194,7 @@ public class RecyclerViewWeatherAdapter extends RecyclerView.Adapter<RecyclerVie
         return ""+(int)cel;
     }
 
-    private ArrayList<Weather> parseJsonResponse(JSONObject response) {
+    private ArrayList<Weather> parseJsonResponse(City city, JSONObject response) {
 
         ArrayList<Weather> mWeather = new ArrayList<Weather>();
         Weather currentWeather = null;
@@ -202,6 +202,12 @@ public class RecyclerViewWeatherAdapter extends RecyclerView.Adapter<RecyclerVie
             int listNumber = 0;
 
             try {
+
+                if(response.has("city") && !response.isNull("city")){
+                    city.setLon(response.getJSONObject("city").getJSONObject("coord").getDouble("lon"));
+                    city.setLat(response.getJSONObject("city").getJSONObject("coord").getDouble("lat"));
+                    Log.d(TAG_JSON,"city object"+city.toString());
+                }
 
                 if (response.has("cnt") && !response.isNull("cnt")) {
                     listNumber = response.getInt("cnt");

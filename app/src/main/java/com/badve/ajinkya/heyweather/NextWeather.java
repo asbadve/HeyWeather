@@ -42,7 +42,7 @@ public class NextWeather extends AppCompatActivity {
     private RecycleEmptyErrorView mRecyclerView;
     private RecyclerViewWeatherNextAdapter mRecyclerViewWeatherNextAdapter;
     private static final String TAG_WEATHER_CITY = "city";
-    private String cityName;
+
     City city;
     Toolbar toolbar;
     private ProgressDialog pDialog;
@@ -60,6 +60,7 @@ public class NextWeather extends AppCompatActivity {
         {
             city = getIntent().getParcelableExtra(TAG_WEATHER_CITY);
             getSupportActionBar().setTitle(city.getName());
+            Log.d("City object ",city.toString());
 
         }else {
             finish();//TODO with some toast message
