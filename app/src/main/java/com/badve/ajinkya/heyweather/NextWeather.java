@@ -65,7 +65,7 @@ public class NextWeather extends AppCompatActivity {
             finish();//TODO with some toast message
         }
 
-        String URL = getURL(cityName);
+        String URL = getURL(city.getName());
 
         // Progress dialog
         pDialog = new ProgressDialog(this);

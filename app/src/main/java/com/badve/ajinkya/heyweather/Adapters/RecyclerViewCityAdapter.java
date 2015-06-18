@@ -37,6 +37,8 @@ public class RecyclerViewCityAdapter extends RecyclerView.Adapter<RecyclerViewCi
         notifyDataSetChanged();
     }
 
+
+
     public City getCity(int position) {
 
         return mCityArrayList.get(position);

@@ -68,6 +68,18 @@ public class RecyclerViewWeatherAdapter extends RecyclerView.Adapter<RecyclerVie
 
     }
 
+    public ArrayList<Weather> getWeatherArrayList(){
+        if(!weather.isEmpty()){
+            return weather;
+        }
+     return null;
+    }
+
+    public void setWeatherArraList(ArrayList<Weather> weather){
+        this.weather=weather;
+        notifyDataSetChanged();
+    }
+
     public City getCity(int position){
         return mCityArrayList.get(position);
     }
