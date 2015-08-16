@@ -55,6 +55,11 @@ public class RecyclerViewWeatherAdapter extends RecyclerView.Adapter<RecyclerVie
     private ArrayList<Weather> weather;
     ImageLoader mImageLoader;
 
+    /**
+     *
+     * @param activity
+     * @param context
+     */
     public RecyclerViewWeatherAdapter(Activity activity, Context context) {
         this.activity = activity;
         this.context = context;
@@ -62,12 +67,20 @@ public class RecyclerViewWeatherAdapter extends RecyclerView.Adapter<RecyclerVie
         mImageLoader = VolleySingleton.getInstance().getImageLoader();
     }
 
+    /**
+     *
+     * @param mCityArrayList
+     */
     public void setCities(ArrayList<City> mCityArrayList){
         this.mCityArrayList = mCityArrayList;
         notifyDataSetChanged();
 
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Weather> getWeatherArrayList(){
         if(!weather.isEmpty()){
             return weather;

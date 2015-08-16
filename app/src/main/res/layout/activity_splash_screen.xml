@@ -71,7 +71,7 @@
 
     <com.badve.ajinkya.heyweather.view.RecycleEmptyErrorView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:id="@+id/recyclerView"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/my_awesome_toolbar"

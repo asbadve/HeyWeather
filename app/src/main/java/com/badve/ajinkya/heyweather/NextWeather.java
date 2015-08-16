@@ -36,6 +36,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
+/**
+ * Shows the details of weather of the current date
+ */
 public class NextWeather extends AppCompatActivity {
     private static final String TAG_WEATHER_PARCEBLE = "weather";
     private ArrayList<Weather> weather;
@@ -112,6 +115,9 @@ public class NextWeather extends AppCompatActivity {
 
     }
 
+    /**
+     * init the Recycler view
+     */
     private void initRecyclerView() {
         mRecyclerView = (RecycleEmptyErrorView)findViewById(R.id.recyclerViewNext);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -120,11 +126,18 @@ public class NextWeather extends AppCompatActivity {
         //mRecyclerView.setAdapter(mRecyclerViewWeatherNextAdapter);
         //mRecyclerViewWeatherNextAdapter.setWeathers(weather);
     }
+
+    /**
+     * Shows the dialog
+     */
     private void showDialog() {
         if (!pDialog.isShowing())
             pDialog.show();
     }
 
+    /**
+     * hide the dialog
+     */
     private void hideDialog() {
         if (pDialog.isShowing())
             pDialog.dismiss();
@@ -156,6 +169,11 @@ public class NextWeather extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Parese the Json object
+     * @param response  JSONObject
+     * @return ArrayList<Weather>
+     */
     private ArrayList<Weather> parseJsonResponse(JSONObject response) {
 
         ArrayList<Weather> mWeather = new ArrayList<Weather>();
@@ -302,6 +320,11 @@ public class NextWeather extends AppCompatActivity {
         return mWeather;
     }
 
+    /**
+     * Conver date in dd/mm/yy
+     * @param dateinMilisecond
+     * @return date Date
+     */
     private Date getDateFormatByString(long dateinMilisecond) {
 
         Calendar cal = Calendar.getInstance();
@@ -351,6 +374,11 @@ public class NextWeather extends AppCompatActivity {
 
     }
 
+    /**
+     * getUrl by city Name
+     * @param name
+     * @return URL EndPointURl
+     */
     private String getURL(String name) {
         //String CityName="pune";
 

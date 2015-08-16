@@ -44,11 +44,22 @@ public class RecycleEmptyErrorView extends RecyclerView {
         mVisibility = getVisibility();
     }
 
+    /**
+     *
+     * @param context
+     * @param attrs
+     */
     public RecycleEmptyErrorView(Context context, AttributeSet attrs) {
         super(context, attrs);
         mVisibility = getVisibility();
     }
 
+    /**
+     *
+     * @param context
+     * @param attrs
+     * @param defStyle
+     */
     public RecycleEmptyErrorView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         mVisibility = getVisibility();
@@ -76,6 +87,9 @@ public class RecycleEmptyErrorView extends RecyclerView {
         updateEmptyView();
     }
 
+    /**
+     * Update the emptyView
+     */
     private void updateEmptyView() {
         if (mEmptyView != null && getAdapter() != null) {
             boolean isShowEmptyView = getAdapter().getItemCount() == 0;
@@ -84,6 +98,9 @@ public class RecycleEmptyErrorView extends RecyclerView {
         }
     }
 
+    /**
+     * update the error view
+     */
     private void updateErrorView() {
         if (mErrorView != null) {
             mErrorView.setVisibility(shouldShowErrorView() && mVisibility == VISIBLE ? VISIBLE : GONE);
@@ -97,23 +114,37 @@ public class RecycleEmptyErrorView extends RecyclerView {
         return false;
     }
 
+    /**
+     * set the emptyView
+     * @param emptyView
+     */
     public void setEmptyView(View emptyView) {
         mEmptyView = emptyView;
         updateEmptyView();
     }
 
+    /**
+     * set the error view
+     * @param errorView
+     */
     public void setErrorView(View errorView) {
         mErrorView = errorView;
         updateErrorView();
         updateEmptyView();
     }
 
+    /**
+     * Shows the error view
+     */
     public void showErrorView() {
         isError = true;
         updateErrorView();
         updateEmptyView();
     }
 
+    /**
+     * Hide the error view
+     */
     public void hideErrorView() {
         isError = false;
         updateErrorView();

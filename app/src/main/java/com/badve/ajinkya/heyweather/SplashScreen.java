@@ -65,6 +65,7 @@ public class SplashScreen extends AppCompatActivity {
     private static final String API_KEY = "AIzaSyAkpLDW9FyaYi5qKyTfl1x1115BoMZGm1I";
     private boolean isKeyBoardOpen=false;
     Database mDatabase;
+    private LinearLayoutManager mLayoutManager;
 
 
     @Override
@@ -189,7 +190,9 @@ public class SplashScreen extends AppCompatActivity {
 
     private void initRecyclerView() {
         mRecyclerView = (RecycleEmptyErrorView)findViewById(R.id.recyclerView);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        //mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mDatabase = new Database(getApplicationContext());
         recyclerViewCityAdapter = new RecyclerViewCityAdapter(getApplicationContext(),SplashScreen.this);
         mRecyclerView.setAdapter(recyclerViewCityAdapter);
